@@ -15,7 +15,7 @@ class Activity {
     }
 }
 
-function callingAPI() {
+async function callingAPI() {
     let mainURL = "http://www.boredapi.com/api/activity?";
 
     const formData = new FormData(
