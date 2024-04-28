@@ -26,7 +26,7 @@ async function callingAPI() {
     let accessibility = ''//Call from slider number
     let price = ''//Call from slider number
     let people = ''//Call from slider number
-    let type = ''//Call type from dropdown
+    let type = 'no preference'//Call type from dropdown
 
     /*for (const [key, value] of formData) {
         switch (key) {
@@ -59,7 +59,7 @@ async function callingAPI() {
         mainURL += `participants=${people}&`;
     }
     console.log(type);
-    if (type !== '')
+    if (type !== 'no preference')
     {
         console.log(type);
         mainURL += `type=${type}`;
