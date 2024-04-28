@@ -18,17 +18,17 @@ class Activity {
 async function callingAPI() {
     let mainURL = "http://www.boredapi.com/api/activity?";
 
-    const formData = new FormData(
-        document.querySelector('#INSERT_NAME_OF_FORM_HERE'),
-        document.querySelector("button[value=NAME_OF_SUBMIT_BUTTON]")
-    );
+    //const formData = new FormData(
+    //    document.querySelector('#INSERT_NAME_OF_FORM_HERE'),
+    //    document.querySelector("button[value=NAME_OF_SUBMIT_BUTTON]")
+    //);
     
     let accessibility = ''//Call from slider number
     let price = ''//Call from slider number
     let people = ''//Call from slider number
-    let type = null//Call type from dropdown
+    let type = ''//Call type from dropdown
 
-    for (const [key, value] of formData) {
+    /*for (const [key, value] of formData) {
         switch (key) {
             case 'slider1':
                 accessibility = value;
@@ -45,20 +45,21 @@ async function callingAPI() {
             default:
                 break;
         }
-    }
+    }*/
     if (accessibility > 0) {
         console.log(accessibility);
-        mainURL += `accessibility=${accessibility}&`;
+        mainURL += `maxaccessibility=${accessibility}&`;
     }
     if (price > 0) {
         console.log(price);
-        mainURL += `price=${price}&`;
+        mainURL += `maxprice=${price}&`;
     }
     if (people > 0) {
         console.log(people);
         mainURL += `participants=${people}&`;
     }
-    if (type !== null || type !== 'no preference');
+    console.log(type);
+    if (type !== '')
     {
         console.log(type);
         mainURL += `type=${type}`;
@@ -79,6 +80,6 @@ async function callingAPI() {
         .catch((error) => console.error(error));
 }
 callingAPI();
-function displayingResults() {
-
+function displayingResults(activity) {
+    //document.body.appendChild(activity);
 }
