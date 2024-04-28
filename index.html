@@ -4,182 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bored API JS Demo</title>
-    <style src="style.css">
-       .dropdown{
-        min-width: 15em;
-        max-width: 25em;
-        position: relative;
-        margin: 2em;
-       }
-
-       .dropdown * {
-        box-sizing:border-box;
-       }
-
-       .select {
-        background: #2a2f3b;
-        color: #fff;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border: 2px #2a2f3b solid;
-        border-radius: 0.5em;
-        padding: 1em;
-        cursor: pointer;
-        transition: background 0.3s;
-       }
-
-       .select-clicked{
-        border: 2px #26489a solid;
-        box-shadow: 0 0 0.8em #26489a;
-       }
-
-       .select:hover{
-        background: #323741;
-       }
-
-       .caret {
-        width: 0;
-        height: 0;
-        border-left: 5px solid transparent;
-        border-right: 5px solid transparent;
-        border-top: 6px solid #fff;
-        transition: 0.3s;
-       }
-
-       /* rotate the caret icon when menu is open -- needs JS */
-       .caret-rotate {
-        transform: rotate(180deg);
-       }
-
-       .type{
-        list-style: none;
-        padding: 0.2em 0.5em;
-        background: #323741;
-        border: 1px #363a43 solid;
-        box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
-        border-radius: 0.5em;
-        color: #9fa5b5;
-        position: absolute;
-        top: 3em;
-        left: 50%;
-        width: 100%;
-        transform: translateX(-50%);
-        opacity: 0;
-        display: none;
-        transition: 0.2s;
-        z-index: 1;
-       }
-
-       .type li{
-        padding: 0.7em 0.5em;
-        margin: 0.3em 0;
-        border-radius: 0.5em;
-        cursor: pointer;
-       }
-
-       .type li:hover{
-        background: #2a2d35;
-       }
-
-
-       /* Active Style -- Needs JS */
-       .active {
-        background: #23242a;
-       }
-
-       /* Open Style -- Needs JS */
-       .type-open{
-        display: block;
-        opacity: 1;
-       }
-
-    </style>
+    <style src="style.css"></style>
 </head>
 <body>
     <header>
         <h1 id="title">Bored API JS Demo</h1>
     </header>
 
-    <main>
-        <!-- Drop down for types -->
-        <!-- ["education", "recreational", "social", "diy", "charity", "cooking", "relaxation", "music", "busywork"] -->
-        <div class="dropdown">
-            <div class="select">
-                <span class="selected">Activity Type</span>
-                <div class="caret"></div>
-            </div>
-            <ul class="type">
-                <li class="active">Activity Type</li>
-                <li>education</li>
-                <li>recreational</li>
-                <li>social</li>
-                <li>diy</li>
-                <li>charity</li>
-                <li>cooking</li>
-                <li>relaxation</li>
-                <li>music</li>
-                <li>busywork</li>
-            </ul>
-        </div>
-        <!-- Slider for accessibility -->
+    <form>
+        <label for="type">Activity Type: </label>
+        <select name="type" id="type">
+            <option value="no preference">No preference</option>
+            <option value="education">Education</option>
+            <option value="recreational">Recreational</option>
+            <option value="social">Social</option>
+            <option value="diy">DIY</option>
+            <option value="charity">Charity</option>
+            <option value="cooking">Cooking</option>
+            <option value="relaxation">Relaxation</option>
+            <option value="music">Music</option>
+            <option value="busywork">Busywork</option>
+        </select>
 
-        <!-- Slider for number of participants -->
+        <label for="slider1">Accessibility</label>
+        <input class="accessibility-value" type="range" min="0" max="1" value=".5" step=".05">
 
-        <!-- Slider for price -->
-    </main>
+        <label for="slider2">Price</label>
+        <input class="slider2" type="range" min="0" max="1" value="0" step=".1">
 
-    <script>
-        console.log('script is here!');
-        // get all dropdowns from the DOM
-        const dropdowns = document.querySelectorAll('.dropdown');
+        <label for="slider3">Participants</label>
+        <input class="slider3" type="range" min="0" max="5" value="0" step="1">
 
-        // loop through all dropdown elements
-        dropdowns.forEach(dropdown =>{
-            // Get inner elements from each of the dropdown menus
-            const select = dropdown.querySelector('.select');
-            const caret = dropdown.querySelector('.caret');
-            const type = dropdown.querySelector('.type');
-            const options = dropdown.querySelectorAll('.type li');
-            const selected = dropdown.querySelector('.selected');
+        <input type="submit">
 
-            // This method will allow us to add more dropdown menus with the
-            // same functionality without issues
+    </form>
 
-            //add a click event to the select element
-            select.addEventListener('click', () => {
-                // add the clicked select styles to the select element from css
-                select.classList.toggle('select-clicked');
-                // add the caret rotate style to the caret element from css
-                caret.classList.toggle('caret-rotate');
-                // add the open style to the type element from css
-                type.classList.toggle('type-open');
-
-            });
-
-            //loop through all options elements
-            options.forEach(option => {
-                //add a click event to the option element
-                option.addEventListener('click', () => {
-                    // change selected inner text to clicked option inner text
-                    selected.innerText = option.innerText;
-                    //add the clicked select style to the select element from css
-                    select.classList.remove('select-clicked');
-                    //add the rotate style to the caret element from the css
-                    caret.classList.remove('caret-rotate');
-                    //add the open style to the type element from the css
-                    type.classList.remove('type-open');
-                    //Remove active class from all option elements
-                    options.forEach(option => {
-                        option.classList.remove('active');
-                    });
-                    //add active class to the clicked option element
-                    option.classList.add('active');
-                });
-            });
-        });
-
-        // Source for how to make dropdown: https://www.youtube.com/watch?v=hBbrGFCszU4
-    </script>
+    <script src="scripts"></script>
 </body>
 </html>
