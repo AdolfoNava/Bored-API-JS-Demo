@@ -29,15 +29,21 @@
             <option value="music">Music</option>
             <option value="busywork">Busywork</option>
         </select>
+        <label for="exampleSlider">example</label>
+        <input type="range" value="24" min="1" max="100" oninput="this.nextElementSibling.value = this.value">
+<output>24</output>
 
         <label for="slider1">Accessibility</label>
-        <input class="accessibility-value" type="range" min="0" max="1" value=".5" step=".05">
+        <input class="accessibility-value" type="range" min="0" max="1" value=".5" step=".05" oninput="this.nextElementSibling.value = this.value">
+        <output>0</output>
 
         <label for="slider2">Price</label>
-        <input class="slider2" type="range" min="0" max="1" value="0" step=".1">
+        <input class="slider2" type="range" min="0" max="1" value="0" step=".1" oninput="this.nextElementSibling.value = this.value">
+        <output>0</output>
 
         <label for="slider3">Participants</label>
-        <input class="slider3" type="range" min="0" max="5" value="0" step="1">
+        <input class="slider3" type="range" min="0" max="5" value="0" step="1" oninput="this.nextElementSibling.value = this.value">
+        <output>0</output>
 
         <input type="submit">
 
