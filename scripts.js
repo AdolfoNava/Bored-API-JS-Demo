@@ -15,13 +15,13 @@ class Activity {
     }
 }
 const submit = document.getElementById('submit');
-submit.addEventListener('click', (e) =>{
+submit.addEventListener('click', (e) => {
     e.preventDefault();
     callingAPI();
 });
+let Activities = [];
 async function callingAPI() {
     let mainURL = "http://www.boredapi.com/api/activity?";
-
     let formData = new FormData(
         document.querySelector('#boredAPIForm'),
         document.querySelector("button[value=submit]")
@@ -41,7 +41,7 @@ async function callingAPI() {
                 break;
             case 'slider3':
                 people = value;
-            break;
+                break;
             case 'type':
                 type = value;
                 break;
@@ -62,27 +62,44 @@ async function callingAPI() {
         mainURL += `participants=${people}&`;
     }
     console.log(type);
-    if (type !== 'no preference')
-    {
+    if (type !== 'no preference') {
         console.log(type);
         mainURL += `type=${type}`;
     }
     console.log(mainURL);
-    fetch(mainURL)
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.error !== `No activity found with the specified parameters`) {
-                const newActivity = new Activity(data.activity, data.type, data.participants, data.price, data.link, data.key, data.accessibility);
-                console.log(newActivity);
-                displayingResults(newActivity);
-            }
-            else {
-                throw new Error(`Failed call`);
-            }
-        })
-        .catch((error) => console.error(error));
+
+    let cycle = 0
+    let check = false;
+    do {
+        fetch(mainURL)
+            .then((response) => response.json())
+            .then((data) => {
+                if (Activities.map((k) => k.key).indexOf(data.key) !== -1 && Activities.length > 1) {
+                    check = true;
+                    Activities.pop();
+                    throw new Error('Repeated call');
+
+                } else if (data.error !== `No activity found with the specified parameters`) {
+                    const newActivity = new Activity(data.activity, data.type, data.participants, data.price, data.link, data.key, data.accessibility);
+
+                    Activities.push(newActivity);
+                    displayingResults(newActivity);
+                }
+                else {
+                    throw new Error(`Failed call`);
+                }
+            }).catch((error) => { console.error(error) });
+        if (check) {
+            break;
+        }
+        cycle++;
+    } while (cycle < 3)                    
+    console.log(Activities);
 }
 //callingAPI();
 function displayingResults(activity) {
     //document.body.appendChild(activity);
+    for (const activity of Activities) {
+
+    }
 }
