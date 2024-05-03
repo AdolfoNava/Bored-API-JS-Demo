@@ -19,9 +19,8 @@ submit.addEventListener('click', (e) => {
     e.preventDefault();
     check = false;
     removeElements();
-    callingAPI();    
-//    setTimeout(errorAlert,2000);
-    setTimeout(displayingResults, 3000);
+    callingAPI();
+    setTimeout(displayingResults, 2500);
 
 });
 let Activities = [];
@@ -80,7 +79,7 @@ async function callingAPI() {
 
     let cycle = 0
 
-    do {        
+    do {
         if (check) {
             cycle = 99;
             break;
@@ -103,9 +102,9 @@ async function callingAPI() {
                     check = true;
                     throw new Error(`Failed call`);
                 }
-            }).catch((error) => { 
+            }).catch((error) => {
                 console.error(error);
-                });
+            });
         cycle++;
     } while (cycle < 3)
     console.log(Activities);
@@ -118,33 +117,47 @@ function removeElements() {
     console.log(divList);
 }
 
-function errorAlert(){
-
-
-}
-
 async function displayingResults() {
     //document.body.appendChild(activity);    
-    if(check){    
+    if (check) {
         alert("Error occured");
         return;
     }
     for (const activity of Activities) {
         const newDiv = document.createElement('div');
-        newDiv.setAttribute('class',"calledActivity");
+        newDiv.setAttribute('class', "calledActivity");
         divList.appendChild(newDiv);
-        const ul = document.createElement('ul');
         let activityName = document.createElement('h3');
-        const liPrice = document.createElement('li');
-        const liParticipants = document.createElement('li');
-        const liAccessibility = document.createElement('li');
-        if(activity.link !== ''){
-            const liAccessibility = document.createElement('li');
-        }
-        liType.textContent = activity.type;
         activityName.textContent = activity.name;
         newDiv.appendChild(activityName);
+
+        const ul = document.createElement('ul');
         newDiv.appendChild(ul);
+
+        if (activity.link !== '') {
+            const liLink = document.createElement('li');
+            const hyperlink = document.createElement('a');
+            hyperlink.setAttribute('href', activity.link);
+            hyperlink.setAttribute('target', '_blank');
+            hyperlink.textContent = activity.link;
+            liLink.appendChild(hyperlink);
+            ul.appendChild(liLink);
+        }
+
+        const liType = document.createElement('li');
+        liType.textContent = `Type of Activity: ${activity.type}`;
         ul.appendChild(liType);
+
+        const liPrice = document.createElement('li');
+        liPrice.textContent = `Price of the activity: ${activity.price}`;
+        ul.appendChild(liPrice);
+
+        const liParticipants = document.createElement('li');
+        liParticipants.textContent = `Number of people for the activity: ${activity.participants}`;
+        ul.appendChild(liParticipants);
+
+        const liAccessibility = document.createElement('li');
+        liAccessibility.textContent = `Accessibility valued at: ${activity.accessibility}`;
+        ul.appendChild(liAccessibility);
     }
 }
