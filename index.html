@@ -4,18 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bored API JS Demo</title>
-    <link rel="stylesheet" href="style.css" type="text/css">
-    <!--<style src="style.css"></style> -->
+    <style src="style.css"></style>
 </head>
 <body>
     <header>
         <h1 id="title">Bored API JS Demo</h1>
-        <br>
-        <h2>Are you Looking for something to do? Let us help you!</h2>
-        <br>
     </header>
 
-    <form>
+    <form id="boredAPIForm" method="post">
         <label for="type">Activity Type: </label>
         <select name="type" id="type">
             <option value="no preference">No preference</option>
@@ -29,26 +25,36 @@
             <option value="music">Music</option>
             <option value="busywork">Busywork</option>
         </select>
-        <label for="exampleSlider">example</label>
-        <input type="range" value="24" min="1" max="100" oninput="this.nextElementSibling.value = this.value">
-<output>24</output>
 
         <label for="slider1">Accessibility</label>
-        <input class="accessibility-value" type="range" min="0" max="1" value=".5" step=".05" oninput="this.nextElementSibling.value = this.value">
-        <output>0</output>
+        <input class="accessibility-value" 
+        name="slider1" type="range" min="0" max="1" value=".5" step=".05" oninput="this.nextElementSibling.value = this.value">
 
         <label for="slider2">Price</label>
-        <input class="slider2" type="range" min="0" max="1" value="0" step=".1" oninput="this.nextElementSibling.value = this.value">
-        <output>0</output>
+        <input class="slider2" name="slider2" type="range" min="0" max="1" value="0" step=".1" oninput="this.nextElementSibling.value = this.value">
 
         <label for="slider3">Participants</label>
-        <input class="slider3" type="range" min="0" max="5" value="0" step="1" oninput="this.nextElementSibling.value = this.value">
-        <output>0</output>
+        <input class="slider3" name="slider3" type="range" min="0" max="5" value="0" step="1" oninput="this.nextElementSibling.value = this.value">
 
-        <input type="submit">
+        <input type="submit" id="submit" value="submit">
 
     </form>
 
-    <script src="scripts"></script>
+    <!-- create a spot for us to displayContent div? activity list-->
+    <!-- Order of activities and how they appear 
+        Activity name
+        Activity type
+        Participants
+        Price 
+        Accessibility
+
+        Stack 3 of these activities in the list
+    -->
+
+    <div class="activtyList">
+        <!-- This will be added via JS -->
+    </div>
+
+    <script src="scripts.js"></script>
 </body>
 </html>
