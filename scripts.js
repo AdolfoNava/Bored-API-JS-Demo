@@ -1,6 +1,6 @@
 class Activity {
-    constructor(activityCalled, type, participants, price, link, key, accessibility) {
-        this.activityCalled = activityCalled;
+    constructor(name, type, participants, price, link, key, accessibility) {
+        this.name = name;
         this.type = type;
         this.participants = participants;
         this.price = price;
@@ -17,10 +17,21 @@ class Activity {
 const submit = document.getElementById('submit');
 submit.addEventListener('click', (e) => {
     e.preventDefault();
-    callingAPI();
+    check = false;
+    removeElements();
+    callingAPI();    
+//    setTimeout(errorAlert,2000);
+    setTimeout(displayingResults, 3000);
+
 });
 let Activities = [];
+
+const divList = document.getElementById("activityList");
+
+let check = false;
+
 async function callingAPI() {
+    Activities = [];
     let mainURL = "http://www.boredapi.com/api/activity?";
     let formData = new FormData(
         document.querySelector('#boredAPIForm'),
@@ -61,7 +72,6 @@ async function callingAPI() {
         console.log(people);
         mainURL += `participants=${people}&`;
     }
-    console.log(type);
     if (type !== 'no preference') {
         console.log(type);
         mainURL += `type=${type}`;
@@ -69,37 +79,72 @@ async function callingAPI() {
     console.log(mainURL);
 
     let cycle = 0
-    let check = false;
-    do {
+
+    do {        
+        if (check) {
+            cycle = 99;
+            break;
+        }
         fetch(mainURL)
             .then((response) => response.json())
             .then((data) => {
                 if (Activities.map((k) => k.key).indexOf(data.key) !== -1 && Activities.length > 1) {
-                    check = true;
                     Activities.pop();
+                    check = true;
                     throw new Error('Repeated call');
 
                 } else if (data.error !== `No activity found with the specified parameters`) {
                     const newActivity = new Activity(data.activity, data.type, data.participants, data.price, data.link, data.key, data.accessibility);
-
-                    Activities.push(newActivity);
-                    displayingResults(newActivity);
+                    if (!Activities.includes(newActivity)) {
+                        Activities.push(newActivity);
+                    }
                 }
                 else {
+                    check = true;
                     throw new Error(`Failed call`);
                 }
-            }).catch((error) => { console.error(error) });
-        if (check) {
-            break;
-        }
+            }).catch((error) => { 
+                console.error(error);
+                });
         cycle++;
-    } while (cycle < 3)                    
+    } while (cycle < 3)
     console.log(Activities);
 }
 //callingAPI();
-function displayingResults(activity) {
-    //document.body.appendChild(activity);
-    for (const activity of Activities) {
+function removeElements() {
+    while (divList.firstChild) {
+        divList.removeChild(divList.firstChild);
+    }
+    console.log(divList);
+}
 
+function errorAlert(){
+
+
+}
+
+async function displayingResults() {
+    //document.body.appendChild(activity);    
+    if(check){    
+        alert("Error occured");
+        return;
+    }
+    for (const activity of Activities) {
+        const newDiv = document.createElement('div');
+        newDiv.setAttribute('class',"calledActivity");
+        divList.appendChild(newDiv);
+        const ul = document.createElement('ul');
+        let activityName = document.createElement('h3');
+        const liPrice = document.createElement('li');
+        const liParticipants = document.createElement('li');
+        const liAccessibility = document.createElement('li');
+        if(activity.link !== ''){
+            const liAccessibility = document.createElement('li');
+        }
+        liType.textContent = activity.type;
+        activityName.textContent = activity.name;
+        newDiv.appendChild(activityName);
+        newDiv.appendChild(ul);
+        ul.appendChild(liType);
     }
 }

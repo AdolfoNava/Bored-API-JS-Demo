@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bored API JS Demo</title>
-    <style src="style.css"></style>
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
@@ -16,7 +17,7 @@
         <select name="type" id="type">
             <option value="no preference">No preference</option>
             <option value="education">Education</option>
-            <option value="recreational">Recreational</option>
+            <option value   ="recreational">Recreational</option>
             <option value="social">Social</option>
             <option value="diy">DIY</option>
             <option value="charity">Charity</option>
@@ -29,13 +30,13 @@
         <label for="slider1">Accessibility</label>
         <input class="accessibility-value" 
         name="slider1" type="range" min="0" max="1" value=".5" step=".05" oninput="this.nextElementSibling.value = this.value">
-
+        <output>0</output>
         <label for="slider2">Price</label>
         <input class="slider2" name="slider2" type="range" min="0" max="1" value="0" step=".1" oninput="this.nextElementSibling.value = this.value">
-
+        <output>0</output>
         <label for="slider3">Participants</label>
         <input class="slider3" name="slider3" type="range" min="0" max="5" value="0" step="1" oninput="this.nextElementSibling.value = this.value">
-
+        <output>0</output>
         <input type="submit" id="submit" value="submit">
 
     </form>
@@ -51,7 +52,7 @@
         Stack 3 of these activities in the list
     -->
 
-    <div class="activtyList">
+    <div id="activityList">
         <!-- This will be added via JS -->
     </div>
 
